@@ -4,7 +4,7 @@ import { Lessey } from './Lessey'
 import { Item } from './Item'
 import { ParticleSystem } from './particles'
 import { ITEM_CONFIGS } from './types'
-import { playMunch, playKiss, playGuitar } from './audio'
+import { playMunch, playChew, playKiss, playGuitar } from './audio'
 
 const TEXTURES = [
   '/background.png',
@@ -72,15 +72,14 @@ export class Game {
 
     for (const item of this.items) {
       item.update(dt)
-      this.checkProximity(item)
+      this.checkProximity(item, dt)
     }
 
     this.particles.update(dt)
   }
 
-  private checkProximity(item: Item) {
+  private checkProximity(item: Item, dt: number) {
     if (!item.isDragged) return
-    if (this.lessey.reacting) return
 
     const l = this.lessey.container
     const dx = item.container.x - l.x
@@ -88,19 +87,36 @@ export class Game {
     const dist = Math.sqrt(dx * dx + dy * dy)
 
     if (dist < 80) {
-      const sfxMap: Record<string, () => void> = {
-        edible: playMunch,
-        cuddly: playKiss,
-        instrument: playGuitar,
-      }
-      sfxMap[item.category]?.()
-
-      this.lessey.triggerReaction(item.category)
-
       if (item.consumed) {
-        this.particles.emit('crumb', item.container.x, item.container.y)
-        this.removeItem(item)
+        if (item.proximityTimer === 0) {
+          this.lessey.triggerReaction(item.category)
+        }
+        item.proximityTimer += dt
+        item.emitCooldown -= dt
+        if (item.emitCooldown <= 0) {
+          this.particles.emit('crumb', item.container.x, item.container.y, 1)
+          playChew()
+          this.lessey.squash()
+          item.squash()
+          item.emitCooldown = 15
+        }
+
+        if (item.proximityTimer >= 120) {
+          playMunch()
+          this.particles.emit('crumb', item.container.x, item.container.y, 12)
+          this.removeItem(item)
+        }
+      } else {
+        if (this.lessey.reacting) return
+        const sfxMap: Record<string, () => void> = {
+          cuddly: playKiss,
+          instrument: playGuitar,
+        }
+        sfxMap[item.category]?.()
+        this.lessey.triggerReaction(item.category)
       }
+    } else {
+      item.proximityTimer = 0
     }
   }
 

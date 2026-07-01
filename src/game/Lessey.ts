@@ -34,6 +34,7 @@ export class Lessey {
   private onFloor = false
   private standY = 0
   private landingSquash = 0
+  private chewSquash = 0
 
   constructor(app: Application) {
     this.app = app
@@ -146,6 +147,16 @@ export class Lessey {
           this.container.scale.x = 1
           this.container.scale.y = 1
         }
+      } else if (this.chewSquash > 0) {
+        this.chewSquash -= 0.08 * dt
+        const s = this.chewSquash
+        this.container.scale.x = 1 + s * 0.12
+        this.container.scale.y = 1 - s * 0.12
+        if (this.chewSquash <= 0) {
+          this.chewSquash = 0
+          this.container.scale.x = 1
+          this.container.scale.y = 1
+        }
       } else if (this.state === 'idle') {
         this.container.scale.x = 1 + this.squashPhase
         this.container.scale.y = 1 - this.squashPhase
@@ -189,5 +200,9 @@ export class Lessey {
     } else if (this.state === 'play') {
       this.sprite.texture = Texture.from(TEXTURE_EAT)
     }
+  }
+
+  squash() {
+    this.chewSquash = 1
   }
 }

@@ -44,3 +44,7 @@ export function playGuitar() {
 export function playThud() {
   playTone(80, 0.15, 'sine', 0.15)
 }
+
+export function playChew() {
+  playTone(300 + Math.random() * 200, 0.05, 'sawtooth', 0.05)
+}

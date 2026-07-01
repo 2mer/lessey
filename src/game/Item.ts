@@ -21,6 +21,7 @@ export class Item {
   private gravity = 0.5
   private onFloor = false
   private landingSquash = 0
+  private chewSquash = 0
   private floorY: number
   private restY = 0
 
@@ -28,6 +29,8 @@ export class Item {
   consumed: boolean
   id: string
   label: string
+  proximityTimer = 0
+  emitCooldown = 0
 
   private deleteModeActive = false
   onDelete: (() => void) | null = null
@@ -71,6 +74,8 @@ export class Item {
       this.dragOffset.y = this.container.y - pos.y
       this.velocity = 0
       this.onFloor = false
+      this.proximityTimer = 0
+      this.emitCooldown = 0
     })
 
     this.boundPointerMove = (e: any) => {
@@ -88,7 +93,23 @@ export class Item {
     this.container.cursor = 'grab'
   }
 
+  squash() {
+    this.chewSquash = 1
+  }
+
   update(dt: number) {
+    if (this.chewSquash > 0) {
+      this.chewSquash -= 0.08 * dt
+      const s = this.chewSquash
+      this.container.scale.x = 1 + s * 0.25
+      this.container.scale.y = 1 - s * 0.25
+      if (this.chewSquash <= 0) {
+        this.chewSquash = 0
+        this.container.scale.x = 1
+        this.container.scale.y = 1
+      }
+    }
+
     if (this.isDragged) return
 
     if (!this.onFloor) {

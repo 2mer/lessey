@@ -32,16 +32,16 @@ export class ParticleSystem {
       const sprite = new Sprite(tex)
       sprite.anchor.set(0.5)
       sprite.scale.set(0.5 + Math.random() * 0.5)
-      sprite.x = x + (Math.random() - 0.5) * 20
-      sprite.y = y + (Math.random() - 0.5) * 10
+      sprite.x = x + (Math.random() - 0.5) * 40
+      sprite.y = y + (Math.random() - 0.5) * 20
       sprite.alpha = 1
 
       this.container.addChild(sprite)
 
       this.particles.push({
         sprite,
-        vx: (Math.random() - 0.5) * 4,
-        vy: -Math.random() * 4 - 1,
+        vx: (Math.random() - 0.5) * 8,
+        vy: -Math.random() * 6 - 3,
         life: 30 + Math.random() * 30,
         maxLife: 30 + Math.random() * 30,
       })
