@@ -11,6 +11,7 @@ interface Particle {
 const TEX_MAP: Record<string, string> = {
   crumb: '/crumb.png',
   heart: '/heart.png',
+  note: '/note.png',
 }
 
 export class ParticleSystem {

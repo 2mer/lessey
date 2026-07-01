@@ -10,7 +10,7 @@ const TEXTURES = [
   '/background.png',
   '/lessey.png', '/lessey_eat.png', '/lessey_kiss.png',
   '/apple.png', '/chocolate.png', '/guitar.png', '/vasya.png', '/zayatz.png',
-  '/crumb.png', '/heart.png',
+  '/crumb.png', '/heart.png', '/note.png',
 ]
 
 export class Game {
@@ -106,17 +106,28 @@ export class Game {
           this.particles.emit('crumb', item.container.x, item.container.y, 12)
           this.removeItem(item)
         }
-      } else {
-        if (this.lessey.reacting) return
-        const sfxMap: Record<string, () => void> = {
-          cuddly: playKiss,
-          instrument: playGuitar,
+      } else if (item.category === 'cuddly') {
+        item.emitCooldown -= dt
+        if (item.emitCooldown <= 0) {
+          playKiss()
+          this.lessey.triggerReaction(item.category)
+          this.lessey.squash()
+          this.particles.emit('heart', item.container.x, item.container.y, 3)
+          item.emitCooldown = 20
         }
-        sfxMap[item.category]?.()
-        this.lessey.triggerReaction(item.category)
+      } else if (item.category === 'instrument') {
+        item.emitCooldown -= dt
+        if (item.emitCooldown <= 0) {
+          playGuitar()
+          this.lessey.triggerReaction(item.category)
+          this.lessey.squash()
+          this.particles.emit('note', item.container.x, item.container.y, 3)
+          item.emitCooldown = 20
+        }
       }
     } else {
       item.proximityTimer = 0
+      item.emitCooldown = 0
     }
   }
 
