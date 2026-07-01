@@ -40,7 +40,7 @@ export class Lessey {
 
     this.sprite = new Sprite(Texture.from(TEXTURE_IDLE))
     this.sprite.anchor.set(0.5)
-    this.sprite.scale.set(0.5)
+    this.sprite.scale.set(0.7)
     this.container.addChild(this.sprite)
 
     this.container.eventMode = 'static'
@@ -77,8 +77,6 @@ export class Lessey {
       const pos = e.global
       this.container.x = pos.x + this.dragOffset.x
       this.container.y = pos.y + this.dragOffset.y
-      this.swingAngle += this.swingSpeed
-      this.container.skew.x = Math.sin(this.swingAngle) * 0.2
       this.onFloor = false
     }
     this.app.stage.on('pointermove', this.boundPointerMove)
@@ -87,7 +85,7 @@ export class Lessey {
       if (!this.isDragged) return
       this.isDragged = false
       this.container.cursor = 'grab'
-      this.container.skew.x = 0
+      this.container.rotation = 0
       this.pickWanderDir()
     }
     this.app.stage.on('pointerup', this.boundPointerUp)
@@ -96,7 +94,7 @@ export class Lessey {
       if (!this.isDragged) return
       this.isDragged = false
       this.container.cursor = 'grab'
-      this.container.skew.x = 0
+      this.container.rotation = 0
       this.pickWanderDir()
     }
     this.app.stage.on('pointerupoutside', this.boundPointerUpOutside)
@@ -117,8 +115,13 @@ export class Lessey {
       }
     }
 
-    this.idleTime += dt * 0.02
-    this.squashPhase = Math.sin(this.idleTime) * 0.08
+    this.idleTime += dt * 0.08
+    this.squashPhase = Math.sin(this.idleTime) * 0.04
+
+    if (this.isDragged) {
+      this.swingAngle += this.swingSpeed
+      this.container.rotation = Math.sin(this.swingAngle) * 0.2
+    }
 
     if (!this.isDragged) {
       if (!this.onFloor) {

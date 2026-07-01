@@ -7,7 +7,7 @@ import { ITEM_CONFIGS } from './types'
 import { playMunch, playKiss, playGuitar } from './audio'
 
 const TEXTURES = [
-  '/background.png', '/floor.png',
+  '/background.png',
   '/lessey.png', '/lessey_eat.png', '/lessey_kiss.png',
   '/apple.png', '/chocolate.png', '/guitar.png', '/vasya.png', '/zayatz.png',
   '/crumb.png', '/heart.png',
@@ -36,7 +36,7 @@ export class Game {
     this.app = new Application()
     await this.app.init({
       resizeTo: this.container,
-      background: '#88ccee',
+      background: '#d4b89e',
       antialias: false,
     })
     this.container.appendChild(this.app.canvas)
