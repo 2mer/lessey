@@ -34,21 +34,33 @@ export class ParticleSystem {
 			const sprite = new Sprite(tex)
 			sprite.anchor.set(0.5)
 			const s = 0.5 + Math.random() * 0.5
-			sprite.scale.set(flipX ? s : -s, s)
-			const dir = flipX ? -1 : 1
-			sprite.x = x + dir * 65 + (Math.random() - 0.5) * 40
-			sprite.y = y + (Math.random() - 0.5) * 20
+			sprite.scale.set(flipX ? -s : s, s)
 			sprite.alpha = 1
 
-			this.container.addChild(sprite)
-
-			this.particles.push({
-				sprite,
-				vx: dir * (4 + (Math.random() * 4)),
-				vy: 0,
-				life: 30 + Math.random() * 30,
-				maxLife: 30 + Math.random() * 30,
-			})
+			if (type === 'sweat') {
+				const dir = flipX ? -1 : 1
+				sprite.x = x + dir * 65 + (Math.random() - 0.5) * 40
+				sprite.y = y + (Math.random() - 0.5) * 20
+				this.container.addChild(sprite)
+				this.particles.push({
+					sprite,
+					vx: dir * (4 + Math.random() * 4),
+					vy: 0,
+					life: 30 + Math.random() * 30,
+					maxLife: 30 + Math.random() * 30,
+				})
+			} else {
+				sprite.x = x + (Math.random() - 0.5) * 40
+				sprite.y = y + (Math.random() - 0.5) * 20
+				this.container.addChild(sprite)
+				this.particles.push({
+					sprite,
+					vx: (Math.random() - 0.5) * 8,
+					vy: -Math.random() * 6 - 3,
+					life: 30 + Math.random() * 30,
+					maxLife: 30 + Math.random() * 30,
+				})
+			}
 		}
 	}
 

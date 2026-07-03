@@ -78,10 +78,9 @@ export class Game {
 			if (this.sweatTimer <= 0) {
 				const side = this.lessey.container.rotation >= 0 ? 1 : -1
 				this.particles.emit('sweat',
-					this.lessey.container.x,
+					this.lessey.container.x + side * 25,
 					this.lessey.container.y - 35,
 					1,
-					//   side < 0,
 					this._alternate = !this._alternate,
 				)
 				this.sweatTimer = 10
