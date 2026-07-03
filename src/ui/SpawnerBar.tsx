@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { ITEM_CONFIGS } from '../game/types'
+import { playTick } from '../game/audio'
 import type { Game } from '../game/Game'
+import styles from './SpawnerBar.module.css'
 
 interface SpawnerBarProps {
   game: Game | null
@@ -20,53 +22,25 @@ export function SpawnerBar({ game }: SpawnerBarProps) {
   }
 
   return (
-    <div
-      style={{
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        display: 'flex',
-        justifyContent: 'center',
-        gap: 8,
-        padding: '10px 16px',
-        background: 'rgba(0,0,0,0.4)',
-        pointerEvents: 'auto',
-      }}
-    >
+    <div className={styles.bar}>
       {ITEM_CONFIGS.map((item) => (
         <button
           key={item.id}
+          className={styles.slot}
           onClick={() => handleSpawn(item.id)}
-          style={{
-            padding: '8px 14px',
-            border: 'none',
-            borderRadius: 6,
-            cursor: 'pointer',
-            fontSize: 14,
-            fontWeight: 600,
-            color: '#fff',
-            background: '#555',
-          }}
+          onMouseEnter={playTick}
+          title={item.label}
         >
-          {item.label}
+          <img src={item.sprite} alt={item.label} />
         </button>
       ))}
       <button
+        className={`${styles.slot} ${styles.trashSlot}${deleteActive ? ` ${styles.trashOn}` : ''}`}
         onClick={handleToggleDelete}
-        style={{
-          padding: '8px 14px',
-          border: 'none',
-          borderRadius: 6,
-          cursor: 'pointer',
-          fontSize: 14,
-          fontWeight: 600,
-          color: '#fff',
-          background: deleteActive ? '#cc3333' : '#555',
-          marginLeft: 8,
-        }}
+        onMouseEnter={playTick}
+        title={deleteActive ? 'Exit delete mode' : 'Delete mode'}
       >
-        {deleteActive ? 'Exit' : 'Trash'}
+        <img src="/trash.png" alt="Trash" />
       </button>
     </div>
   )

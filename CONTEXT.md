@@ -27,16 +27,20 @@ Items are objects in the scene the player can drag around. Each item belongs to 
 
 No persistence. Scene resets completely on page refresh.
 
-## Spawner UI
+## Spawner Bar
 
-A palette of buttons for spawning items and a trashcan button. Items spawn at the cursor position, immediately grabbable. Multiple copies of the same item can exist simultaneously.
+A palette of slots at the bottom of the screen for spawning items, plus a trash slot for delete mode. Items spawn at the cursor position, immediately grabbable. Multiple copies of the same item can exist simultaneously.
 
-- Click an item button → spawns it at cursor position
-- Click trashcan → enter delete mode; click an item in the scene to remove it
+- Click an item slot → spawns it at cursor position
+- Click trash slot → toggle delete mode; click an item in the scene to remove it
+
+**Slot**:
+A square container in the spawner bar representing an item. Rendered with a background image (`slot.png` or `delete_slot_on.png` when in delete mode) and the item's sprite texture inside. Hover applies `brightness(1.2)` with a 250ms transition.
+_Avoid_: Button, button, palette entry
 
 ## UI
 
-The spawner toolbar is an overlay at the bottom of the canvas. Buttons for each item (chocolate bar, apple, cat, rabbit, guitar) and a trashcan button at the right edge.
+The spawner bar is an overlay at the bottom of the canvas. It contains one slot per MVP item and a trash slot at the right edge.
 
 ## Audio
 
@@ -45,6 +49,7 @@ Simple SFX (no background music):
 - Kiss sound (smooch)
 - Guitar strum
 - Soft thud when an item hits the floor
+- Tick — a low-frequency square-wave blip played on slot hover
 
 ## Scene
 

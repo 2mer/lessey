@@ -2,14 +2,6 @@ import { Application, Container, Sprite, Texture } from 'pixi.js'
 import { type ItemCategory, type ItemConfig } from './types'
 import { playThud } from './audio'
 
-const FILE_MAP: Record<string, string> = {
-  chocolate: '/chocolate.png',
-  apple: '/apple.png',
-  cat: '/vasya.png',
-  rabbit: '/zayatz.png',
-  guitar: '/guitar.png',
-}
-
 export class Item {
   container = new Container()
   private sprite: Sprite
@@ -28,7 +20,6 @@ export class Item {
   category: ItemCategory
   consumed: boolean
   id: string
-  label: string
   proximityTimer = 0
   emitCooldown = 0
 
@@ -41,12 +32,10 @@ export class Item {
     this.category = cfg.category
     this.consumed = cfg.consumed
     this.id = cfg.id
-    this.label = cfg.label
 
     this.floorY = app.screen.height - 135
 
-    const texPath = FILE_MAP[this.id] ?? ''
-    this.sprite = new Sprite(Texture.from(texPath))
+    this.sprite = new Sprite(Texture.from(cfg.sprite))
     this.sprite.anchor.set(0.5)
     this.sprite.scale.set(0.5)
     this.container.addChild(this.sprite)

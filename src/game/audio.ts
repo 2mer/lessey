@@ -28,24 +28,28 @@ function playTone(freq: number, duration: number, type: OscillatorType = 'sine',
 
 export function playMunch() {
 	playTone(300, 0.1, 'square', 0.1)
-	setTimeout(() => playTone(200, 0.08, 'square', 0.08), 80)
+	setTimeout(() => playTone(200, 0.08, 'square', 0.28), 80)
 }
 
 export function playKiss() {
 	playTone(600, 0.12, 'sine', 0.12)
-	setTimeout(() => playTone(800, 0.15, 'sine', 0.1), 60)
+	setTimeout(() => playTone(800, 0.15, 'sine', 0.3), 60)
 }
 
 export function playGuitar() {
 	playTone(220, 0.3, 'sawtooth', 0.08)
-	setTimeout(() => playTone(330, 0.25, 'sawtooth', 0.06), 150)
+	setTimeout(() => playTone(330, 0.25, 'sawtooth', 0.16), 150)
 }
 
 export function playThud() {
 	playTone(60, 0.25, 'sine', 0.55)
-	playTone(120, 0.08, 'triangle', 0.4)
+	playTone(120, 0.08, 'triangle', 0.6)
 }
 
 export function playChew() {
-	playTone(300 + Math.random() * 200, 0.05, 'sawtooth', 0.05)
+	playTone(300 + Math.random() * 200, 0.05, 'sawtooth', 0.25)
+}
+
+export function playTick() {
+	playTone(200, 0.04, 'square', 0.10)
 }
