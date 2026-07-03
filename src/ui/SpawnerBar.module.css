@@ -36,6 +36,10 @@
   pointer-events: none;
 }
 
+.specialSlot {
+  background-image: url('/special_slot.png');
+}
+
 .trashSlot {
   margin-left: 8px;
 }

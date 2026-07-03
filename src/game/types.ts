@@ -14,4 +14,5 @@ export const ITEM_CONFIGS: ItemConfig[] = [
   { id: 'cat', label: 'Cat', sprite: '/vasya.png', category: 'cuddly', consumed: false },
   { id: 'rabbit', label: 'Rabbit', sprite: '/zayatz.png', category: 'cuddly', consumed: false },
   { id: 'guitar', label: 'Guitar', sprite: '/guitar.png', category: 'instrument', consumed: false },
+  { id: 'cake', label: 'Cake', sprite: '/cake.png', category: 'edible', consumed: true },
 ]

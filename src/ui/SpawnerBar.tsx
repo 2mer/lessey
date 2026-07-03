@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ITEM_CONFIGS } from '../game/types'
+import { getTodaysSpecialSlots } from '../game/specialDates'
 import { playTick } from '../game/audio'
 import type { Game } from '../game/Game'
 import styles from './SpawnerBar.module.css'
@@ -10,6 +11,8 @@ interface SpawnerBarProps {
 
 export function SpawnerBar({ game }: SpawnerBarProps) {
   const [deleteActive, setDeleteActive] = useState(false)
+  const specialSlots = getTodaysSpecialSlots()
+  const specialIds = new Set(specialSlots.map((s) => s.itemId))
 
   const handleSpawn = (itemId: string) => {
     game?.spawnItem(itemId)
@@ -23,7 +26,22 @@ export function SpawnerBar({ game }: SpawnerBarProps) {
 
   return (
     <div className={styles.bar}>
-      {ITEM_CONFIGS.map((item) => (
+      {specialSlots.map((slot) => {
+        const cfg = ITEM_CONFIGS.find((c) => c.id === slot.itemId)
+        if (!cfg) return null
+        return (
+          <button
+            key={slot.itemId}
+            className={`${styles.slot} ${styles.specialSlot}`}
+            onClick={() => handleSpawn(slot.itemId)}
+            onMouseEnter={playTick}
+            title={cfg.label}
+          >
+            <img src={cfg.sprite} alt={cfg.label} />
+          </button>
+        )
+      })}
+      {ITEM_CONFIGS.filter((item) => !specialIds.has(item.id)).map((item) => (
         <button
           key={item.id}
           className={styles.slot}

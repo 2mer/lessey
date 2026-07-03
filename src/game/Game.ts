@@ -11,6 +11,7 @@ const TEXTURES = [
 	'/lessey.png', '/lessey_eat.png', '/lessey_kiss.png',
 	'/apple.png', '/chocolate.png', '/guitar.png', '/vasya.png', '/zayatz.png',
 	'/crumb.png', '/heart.png', '/note.png', '/sweat.png',
+	'/cake.png',
 ]
 
 export class Game {
@@ -24,6 +25,7 @@ export class Game {
 	private mouseX = 0
 	private mouseY = 0
 	private sweatTimer = 0
+	onMessage: ((msg: string) => void) | null = null
 
 	constructor(container: HTMLElement) {
 		this.container = container
@@ -123,6 +125,9 @@ export class Game {
 				if (item.proximityTimer >= 120) {
 					playMunch()
 					this.particles.emit('crumb', item.container.x, item.container.y, 12)
+					if (item.id === 'cake') {
+						this.onMessage?.('Happy Birthday!')
+					}
 					this.removeItem(item)
 				}
 			} else if (item.category === 'cuddly') {
