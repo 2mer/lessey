@@ -5,13 +5,14 @@ import { Item } from './Item'
 import { ParticleSystem } from './particles'
 import { ITEM_CONFIGS } from './types'
 import { playMunch, playChew, playKiss, playGuitar } from './audio'
+import { img } from '../util'
 
 const TEXTURES = [
-	'/background.png',
-	'/lessey.png', '/lessey_eat.png', '/lessey_kiss.png',
-	'/apple.png', '/chocolate.png', '/guitar.png', '/vasya.png', '/zayatz.png',
-	'/crumb.png', '/heart.png', '/note.png', '/sweat.png',
-	'/cake.png',
+	img`/background.png`,
+	img`/lessey.png`, img`/lessey_eat.png`, img`/lessey_kiss.png`,
+	img`/apple.png`, img`/chocolate.png`, img`/guitar.png`, img`/vasya.png`, img`/zayatz.png`,
+	img`/crumb.png`, img`/heart.png`, img`/note.png`, img`/sweat.png`,
+	img`/cake.png`,
 ]
 
 export class Game {
