@@ -1,4 +1,5 @@
 import { Application, Container, Sprite, Texture } from 'pixi.js'
+import { img } from '../util'
 
 interface Particle {
 	sprite: Sprite
@@ -9,10 +10,10 @@ interface Particle {
 }
 
 const TEX_MAP: Record<string, string> = {
-	crumb: '/crumb.png',
-	heart: '/heart.png',
-	note: '/note.png',
-	sweat: '/sweat.png',
+	crumb: img`/crumb.png`,
+	heart: img`/heart.png`,
+	note: img`/note.png`,
+	sweat: img`/sweat.png`,
 }
 
 export class ParticleSystem {
